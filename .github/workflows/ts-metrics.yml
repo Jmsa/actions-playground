@@ -1,0 +1,44 @@
+name: Calculate Typescript Metrics
+
+on:
+  schedule:
+    # Note: This is based off UTC
+    - cron:  '07 15 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  get-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.12.1"
+
+      - name: Simplify and install dependencies
+        id: install-deps
+        run: |
+          rm -f package.json   
+          echo {} > package.json  
+          npm install linguist-js
+
+      - name: Collect metrics
+        id: collect-metrics
+        # run: echo "metrics={node analyze.js}" >> $GITHUB_OUTPUT
+        # run: node analyze.js
+        run: echo "metrics=$(node analyze.js)" >> $GITHUB_OUTPUT
+
+      - name: Echo metrics
+        id: echo
+        run: echo ${{steps.collect-metrics.outputs }}
+
+      # - name: HTTP Request Action
+      #   uses: fjogeleit/http-request-action@v1.13.0
+      #   with:
+      #     url: 'https://localhost:3001/incoming-events/github/actions'
+      #     method: 'POST'
+      #     customHeaders: '{"Content-Type": "application/json"}'
+      #     data: '{"key_1": "value_1", "key_2": "value_2"}'
