@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,         
+        "strictNullChecks": false,  
+        "baseUrl": ".",
+        "jsx": "react",
+      "outDir": "./built",
+      "allowJs": true,
+      "checkJs": false,
+      "module": "es6",           
+      "target": "es5",
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "downlevelIteration": true
+    },
+    "include": [
+      "./app/*.d.ts",
+      "./app/**/*.js",
+      "./app/**/*.ts",
+      "./app/**/*.jsx",
+      "./app/**/*.tsx",
+
+    ],
+    "exclude": [
+      "node_modules",
+    ]
+}
